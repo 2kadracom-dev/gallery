@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BREGNEFF | Галерея</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff; }
+        iframe { border: none; width: 100%; height: 100%; }
+    </style>
+</head>
+<body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const folderId = urlParams.get('id');
+        // Твоя ссылка, которая сейчас работает
+        const baseLink = "https://script.google.com/macros/s/AKfycbwC_pYGTramMAsOCyIrZuKHY4wXClyHnoy0XzVlPhc3XC3e9z2AC12kGJQFgDeySdrY_w/exec";
+        
+        const finalUrl = folderId ? baseLink + "?id=" + folderId : baseLink;
+        document.write(`<iframe src="${finalUrl}"></iframe>`);
+    </script>
+</body>
+</html>
