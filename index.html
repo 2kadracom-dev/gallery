@@ -4,41 +4,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>BREGNEFF | Медійне обслуговування</title>
+    <title>BREGNEFF | Фото та Відео</title>
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="BREGNEFF Studio">
-    <meta property="og:title" content="Ваша персональна галерея">
-    <meta property="og:description" content="Фото та відео з турніру з художньої гімнастики">
-    <meta property="og:image" content="https://bregneff.com/og-image.jpg">
+    
+    <script>
+        // МАГІЯ ПРІЗВИЩА: Читаємо ім'я з посилання і ставимо в заголовок до завантаження сторінки
+        const params = new URLSearchParams(window.location.search);
+        const userName = params.get('name');
+        if (userName) {
+            const cleanName = decodeURIComponent(userName).replace(/_/g, ' ');
+            document.title = "BREGNEFF | " + cleanName;
+            // Створюємо динамічний тег для месенджерів
+            let meta = document.createElement('meta');
+            meta.setAttribute('property', 'og:title');
+            meta.content = "Галерея: " + cleanName;
+            document.getElementsByTagName('head')[0].appendChild(meta);
+        }
+    </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
-    
     <style>
         body, html { margin: 0; padding: 0; height: 100%; background: #fff; font-family: 'Montserrat', sans-serif; overflow: hidden; }
         iframe { border: none; width: 100%; height: 100%; display: none; }
-        
-        /* Стиль візитки на головній */
-        .landing-container { 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-            height: 100vh; text-align: center; padding: 20px; box-sizing: border-box;
-            background: #fff; color: #000;
-        }
-        
+        .landing-container { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; padding: 20px; box-sizing: border-box; }
         .logo { font-size: 36px; letter-spacing: 12px; font-weight: 300; margin-bottom: 10px; text-transform: uppercase; }
         .divider { width: 40px; height: 1px; background: #000; margin: 30px 0; }
-        .description { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; max-width: 500px; line-height: 1.8; font-weight: 400; }
-        
-        .contact-link { 
-            margin-top: 50px; text-decoration: none; color: #fff; background: #000; 
-            padding: 18px 40px; font-size: 11px; font-weight: 700; letter-spacing: 3px; 
-            text-transform: uppercase; transition: 0.4s; border-radius: 0;
-        }
-        .contact-link:hover { background: #333; letter-spacing: 5px; }
+        .description { font-size: 13px; letter-spacing: 3px; text-transform: uppercase; max-width: 500px; line-height: 1.8; }
+        .contact-link { margin-top: 50px; text-decoration: none; color: #fff; background: #000; padding: 18px 40px; font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
         .phone { margin-top: 30px; font-size: 16px; font-weight: 400; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-
     <div id="landing" class="landing-container" style="display: none;">
         <div class="logo">BREGNEFF</div>
         <div class="divider"></div>
@@ -46,27 +43,17 @@
         <a href="viber://chat?number=%2B380672937154" class="contact-link">Зв'язатися у Viber</a>
         <div class="phone">067 293 71 54</div>
     </div>
-
     <div id="gallery-frame-container" style="height: 100%;"></div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const folderId = urlParams.get('id');
+        const folderId = params.get('id');
         const landing = document.getElementById('landing');
         const frameContainer = document.getElementById('gallery-frame-container');
-        
-        // Посилання на твій Google Script (двигун)
         const baseLink = "https://script.google.com/macros/s/AKfycbwC_pYGTramMAsOCyIrZuKHY4wXClyHnoy0XzVlPhc3XC3e9z2AC12kGJQFgDeySdrY_w/exec";
 
         if (folderId) {
-            // Якщо є ID — завантажуємо галерею в iframe
-            const finalUrl = baseLink + "?id=" + folderId;
-            frameContainer.innerHTML = `<iframe src="${finalUrl}" style="display:block;"></iframe>`;
-            
-            // Намагаємося змінити заголовок сторінки, щоб месенджери його бачили
-            document.title = "BREGNEFF | Фото та Відео";
+            frameContainer.innerHTML = `<iframe src="${baseLink}?id=${folderId}" style="display:block;"></iframe>`;
         } else {
-            // Якщо ID немає — вмикаємо візитку
             landing.style.display = 'flex';
         }
     </script>
