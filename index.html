@@ -3,21 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BREGNEFF | Галерея</title>
+    <title>BREGNEFF | Медійне обслуговування турнірів</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff; }
-        iframe { border: none; width: 100%; height: 100%; }
+        body, html { margin: 0; padding: 0; height: 100%; background: #000; font-family: 'Montserrat', sans-serif; overflow: hidden; }
+        iframe { border: none; width: 100%; height: 100%; display: none; }
+        
+        /* Лендинг з фоновим фото */
+        .landing-container { 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            height: 100vh; text-align: center; padding: 20px; box-sizing: border-box;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('ПОСИЛАННЯ_НА_ТВОЄ_ТОП_ФОТО') no-repeat center center;
+            background-size: cover;
+            color: #fff;
+        }
+        
+        .logo { font-size: 32px; letter-spacing: 8px; font-weight: 400; margin-bottom: 10px; text-transform: uppercase; }
+        .divider { width: 50px; height: 1px; background: #fff; margin: 20px 0; }
+        .description { font-size: 14px; letter-spacing: 2px; text-transform: uppercase; max-width: 600px; line-height: 1.6; }
+        
+        .contact-link { 
+            margin-top: 40px; text-decoration: none; color: #000; background: #fff; 
+            padding: 15px 35px; font-size: 12px; font-weight: 700; letter-spacing: 2px; 
+            text-transform: uppercase; transition: 0.3s; border-radius: 2px;
+        }
+        .contact-link:hover { background: #ccc; transform: translateY(-2px); }
+        .phone { margin-top: 25px; font-size: 16px; font-weight: 400; letter-spacing: 2px; opacity: 0.9; }
     </style>
 </head>
 <body>
+
+    <div id="landing" class="landing-container" style="display: none;">
+        <div class="logo">BREGNEFF</div>
+        <div class="divider"></div>
+        <div class="description">Медійне обслуговування турнірів з художньої гімнастики</div>
+        <a href="viber://chat?number=%2B380672937154" class="contact-link">Зв'язатися у Viber</a>
+        <div class="phone">067 293 71 54</div>
+    </div>
+
+    <div id="gallery-frame-container" style="height: 100%;"></div>
+
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const folderId = urlParams.get('id');
-        // Твоя ссылка, которая сейчас работает
-        const baseLink = "https://script.google.com/macros/s/AKfycbwC_pYGTramMAsOCyIrZuKHY4wXClyHnoy0XzVlPhc3XC3e9z2AC12kGJQFgDeySdrY_w/exec";
+        const landing = document.getElementById('landing');
+        const frameContainer = document.getElementById('gallery-frame-container');
         
-        const finalUrl = folderId ? baseLink + "?id=" + folderId : baseLink;
-        document.write(`<iframe src="${finalUrl}"></iframe>`);
+        const baseLink = "https://script.google.com/macros/s/AKfycbwC_pYGTramMAsOCyIrZuKHY4wXClyHnoy0XzVlPhc3XC3e9z2AC12kGJQFgDeySdrY_w/exec";
+
+        if (folderId) {
+            const finalUrl = baseLink + "?id=" + folderId;
+            frameContainer.innerHTML = `<iframe src="${finalUrl}" style="display:block;"></iframe>`;
+        } else {
+            landing.style.display = 'flex';
+        }
     </script>
 </body>
 </html>
